@@ -48,7 +48,7 @@ class Segment(RelativeLayout):
     '''
 
     scale = NumericProperty(0.1)
-    color = ListProperty(get_color_from_hex('2fc827')) # bad
+    color = StringProperty('2fc827')
     value = StringProperty("0")
 
     def __init__(self, **kwargs):     
@@ -172,7 +172,10 @@ class Segment(RelativeLayout):
 
         with self.canvas:
             self.canvas.clear()
-            Color(self.color[0], self.color[1], self.color[2], 100)
+            Color(
+                get_color_from_hex(self.color)[0], 
+                get_color_from_hex(self.color)[1], 
+                get_color_from_hex(self.color)[2], 100)
             Scale(self.scale)
 
             def make_mesh(self, ttype, *args):
@@ -194,26 +197,26 @@ class SegmentTestApp(App):
         box.add_widget(Segment(value="1", scale=0.3))
         box.add_widget(Segment(value="2"))
         box.add_widget(Segment(value="2.", scale=0.3))
-        box.add_widget(Segment(value="3"))
+        box.add_widget(Segment(value="3", color='2fc899'))
         box.add_widget(Segment(value="4"))
         box.add_widget(Segment(value="5"))
         box.add_widget(Segment(value="6"))
         box.add_widget(Segment(value="7"))
         box.add_widget(Segment(value="8"))
-        box.add_widget(Segment(value="8.", scale=0.3))
+        box.add_widget(Segment(value="8.", scale=0.3, color='dd9225'))
         box.add_widget(Segment(value="9"))
         box.add_widget(Segment(value="9."))
         box.add_widget(Segment(value="A"))
         box.add_widget(Segment(value="A."))
-        box.add_widget(Segment(value="b"))
+        box.add_widget(Segment(value="b", color='2fc899'))
         box.add_widget(Segment(value="C"))
         box.add_widget(Segment(value="C."))
-        box.add_widget(Segment(value="d"))
+        box.add_widget(Segment(value="d", color='2555dd'))
         box.add_widget(Segment(value="d."))
-        box.add_widget(Segment(value="E"))
+        box.add_widget(Segment(value="E", color='7fc891'))
         box.add_widget(Segment(value="E."))
-        box.add_widget(Segment(value="F"))
-        box.add_widget(Segment(value="F."))
+        box.add_widget(Segment(value="F", color='2fc119'))
+        box.add_widget(Segment(value="F.", scale=0.4))
         return box
             
 if __name__ in ('__main__'):
