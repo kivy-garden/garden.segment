@@ -16,6 +16,7 @@ __title__ = 'garden.segment'
 __version__ = '0.2'
 __author__ = 'julien@hautefeuille.eu'
 
+import random
 import kivy
 kivy.require('1.7.1')
 from kivy.config import Config
@@ -47,7 +48,7 @@ class Segment(RelativeLayout):
 
     '''
 
-    scale = NumericProperty(0.1)
+    scale = NumericProperty(0.1, min=0.1, max=1, errorvalue=0.2)
     color = StringProperty('2fc827')
     value = StringProperty("0")
 
@@ -167,6 +168,7 @@ class Segment(RelativeLayout):
                 }
 
         self.bind(pos=self._update_canvas, size=self._update_canvas)
+        self.bind(value=self.refresh)
 
     def _update_canvas(self, *args):
 
@@ -188,35 +190,30 @@ class Segment(RelativeLayout):
                 if self.value == key:
                     make_mesh(self, ttype=val)
    
+    def refresh(self, *args):
+            self.seg.value = str(random.choice('123456789'))
+            print str(random.choice('123456789'))
+
 class SegmentTestApp(App):
+
+
+    
+
     def build(self):
+
+        
+
         box = GridLayout(cols=8, padding=20)
-        box.add_widget(Segment(value="0", scale=0.3))
-        box.add_widget(Segment(value="0.", scale=0.2))
-        box.add_widget(Segment(value="1."))
-        box.add_widget(Segment(value="1", scale=0.3))
-        box.add_widget(Segment(value="2"))
-        box.add_widget(Segment(value="2.", scale=0.3))
-        box.add_widget(Segment(value="3", color='2fc899'))
-        box.add_widget(Segment(value="4"))
-        box.add_widget(Segment(value="5"))
-        box.add_widget(Segment(value="6"))
-        box.add_widget(Segment(value="7"))
-        box.add_widget(Segment(value="8"))
-        box.add_widget(Segment(value="8.", scale=0.3, color='dd9225'))
-        box.add_widget(Segment(value="9"))
-        box.add_widget(Segment(value="9."))
-        box.add_widget(Segment(value="A"))
-        box.add_widget(Segment(value="A."))
-        box.add_widget(Segment(value="b", color='2fc899'))
-        box.add_widget(Segment(value="C"))
-        box.add_widget(Segment(value="C."))
-        box.add_widget(Segment(value="d", color='2555dd'))
-        box.add_widget(Segment(value="d."))
-        box.add_widget(Segment(value="E", color='7fc891'))
-        box.add_widget(Segment(value="E."))
-        box.add_widget(Segment(value="F", color='2fc119'))
-        box.add_widget(Segment(value="F.", scale=0.4))
+
+        self.seg = Segment(scale=0.3, value="9")
+        box.add_widget(self.seg)
+
+
+
+
+
+        
+
         return box
             
 if __name__ in ('__main__'):
