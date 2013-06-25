@@ -47,7 +47,7 @@ class Segment(RelativeLayout):
 
     '''
 
-    scale = NumericProperty(0.5)
+    scale = NumericProperty(0.1)
     color = ListProperty(get_color_from_hex('2fc827')) # bad
     value = StringProperty("0")
 
@@ -114,9 +114,57 @@ class Segment(RelativeLayout):
                 35, 0, 0, 0,
                 ]
 
-        self.type_0 = [seg_1, seg_2, seg_3, seg_5, seg_6, seg_7]
-        self.type_1 = [seg_5, seg_6]
+        type_0 = [seg_1, seg_2, seg_3, seg_5, seg_6, seg_7]
+        type_1 = [seg_3, seg_6]
+        type_2 = [seg_1, seg_3, seg_4, seg_5, seg_7]
+        type_3 = [seg_1, seg_3, seg_4, seg_6, seg_7]
+        type_4 = [seg_2, seg_3, seg_4, seg_6]
+        type_5 = [seg_1, seg_2, seg_4, seg_6, seg_7]
+        type_6 = [seg_1, seg_2, seg_4, seg_5, seg_6, seg_7]
+        type_7 = [seg_1, seg_3, seg_6]
+        type_8 = [seg_1, seg_2, seg_3, seg_4, seg_5, seg_6, seg_7]
+        type_9 = [seg_1, seg_2, seg_3, seg_4, seg_6, seg_7]
+        type_A = [seg_1, seg_2, seg_3, seg_4, seg_5, seg_6]
+        type_b = [seg_2, seg_4, seg_5, seg_6, seg_7]
+        type_C = [seg_1, seg_2, seg_5, seg_7]
+        type_d = [seg_3, seg_4, seg_5, seg_6, seg_7]
+        type_E = [seg_1, seg_2, seg_4, seg_5, seg_7]
+        type_F = [seg_1, seg_2, seg_4, seg_5]
 
+        self.type_dic = {
+                "0" : type_0,
+                "0.": type_0,
+                "1" : type_1,
+                "1.": type_1,
+                "2" : type_2,
+                "2.": type_2,
+                "3" : type_3,
+                "3.": type_3,
+                "4" : type_4,
+                "4.": type_4,
+                "5" : type_5,
+                "5.": type_5,
+                "6" : type_6,
+                "6.": type_6,
+                "7" : type_7,
+                "7.": type_7,
+                "8" : type_8,
+                "8.": type_8,
+                "9" : type_9,
+                "9.": type_9,
+                "A" : type_A,
+                "A.": type_A,
+                "b" : type_b,
+                "b.": type_b,
+                "C" : type_C,
+                "C.": type_C,
+                "d" : type_d,
+                "d.": type_d,
+                "E": type_E,
+                "E.": type_E,
+                "F" : type_F,
+                "F.": type_F,
+                }
 
         self.bind(pos=self._update_canvas, size=self._update_canvas)
 
@@ -133,21 +181,39 @@ class Segment(RelativeLayout):
                 if len(self.value) > 1:
                     thept = Ellipse(pos=(135, 0), size=(25,25), segments=360)
 
-            if self.value == "0" or self.value == "0.":
-                make_mesh(self, ttype=self.type_0)
-
-            if self.value == "1" or self.value == "1.":
-                make_mesh(self, ttype=self.type_1)
+            for key, val in self.type_dic.items():
+                if self.value == key:
+                    make_mesh(self, ttype=val)
    
 class SegmentTestApp(App):
     def build(self):
-        box = GridLayout(cols=3, padding=20)
-        box.add_widget(Segment(value="1"))
-        box.add_widget(Segment(value="0"))
-        box.add_widget(Segment(value="0."))
-        box.add_widget(Segment(value="0"))
-        box.add_widget(Segment(value="0"))
-        box.add_widget(Segment(value="0"))
+        box = GridLayout(cols=8, padding=20)
+        box.add_widget(Segment(value="0", scale=0.3))
+        box.add_widget(Segment(value="0.", scale=0.2))
+        box.add_widget(Segment(value="1."))
+        box.add_widget(Segment(value="1", scale=0.3))
+        box.add_widget(Segment(value="2"))
+        box.add_widget(Segment(value="2.", scale=0.3))
+        box.add_widget(Segment(value="3"))
+        box.add_widget(Segment(value="4"))
+        box.add_widget(Segment(value="5"))
+        box.add_widget(Segment(value="6"))
+        box.add_widget(Segment(value="7"))
+        box.add_widget(Segment(value="8"))
+        box.add_widget(Segment(value="8.", scale=0.3))
+        box.add_widget(Segment(value="9"))
+        box.add_widget(Segment(value="9."))
+        box.add_widget(Segment(value="A"))
+        box.add_widget(Segment(value="A."))
+        box.add_widget(Segment(value="b"))
+        box.add_widget(Segment(value="C"))
+        box.add_widget(Segment(value="C."))
+        box.add_widget(Segment(value="d"))
+        box.add_widget(Segment(value="d."))
+        box.add_widget(Segment(value="E"))
+        box.add_widget(Segment(value="E."))
+        box.add_widget(Segment(value="F"))
+        box.add_widget(Segment(value="F."))
         return box
             
 if __name__ in ('__main__'):
