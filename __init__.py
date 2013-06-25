@@ -167,8 +167,13 @@ class Segment(RelativeLayout):
                 "F.": type_F,
                 }
 
-        self.bind(pos=self._update_canvas, size=self._update_canvas)
-        self.bind(value=self.refresh)
+        self.bind(
+            pos=self._update_canvas, 
+            size=self._update_canvas,
+            value=self._update_canvas
+            )
+        
+        Clock.schedule_interval(self.refresh, 0.5)
 
     def _update_canvas(self, *args):
 
@@ -191,29 +196,18 @@ class Segment(RelativeLayout):
                     make_mesh(self, ttype=val)
    
     def refresh(self, *args):
-            self.seg.value = str(random.choice('123456789'))
-            print str(random.choice('123456789'))
+            self.value = str(random.choice('123456789AbCdEF'))
 
+        
 class SegmentTestApp(App):
-
-
-    
 
     def build(self):
 
-        
-
         box = GridLayout(cols=8, padding=20)
-
         self.seg = Segment(scale=0.3, value="9")
+        self.seg1 = Segment(scale=0.3, value="9")
         box.add_widget(self.seg)
-
-
-
-
-
-        
-
+        box.add_widget(self.seg1)
         return box
             
 if __name__ in ('__main__'):
