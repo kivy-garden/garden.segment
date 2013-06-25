@@ -13,7 +13,7 @@ The :class:`Segment` widget is a widget for displaying segment.
 __all__ = ('Segment')
 
 __title__ = 'garden.segment'
-__version__ = '0.1'
+__version__ = '0.2'
 __author__ = 'julien@hautefeuille.eu'
 
 import kivy
@@ -48,39 +48,40 @@ class Segment(RelativeLayout):
     '''
 
     scale = NumericProperty(0.5)
-    color = ListProperty(get_color_from_hex('2fc827'))
-    value = StringProperty("E.")
+    color = ListProperty(get_color_from_hex('2fc827')) # bad
+    value = StringProperty("0")
 
-    def __init__(self, **kwargs):
-        
+    def __init__(self, **kwargs):     
         super(Segment, self).__init__(**kwargs)
 
-        segment_dict = {
-            'seg_1' : [
+        self.indice = xrange(0,6)
+        self.xmode = 'triangle_fan'
+        
+        seg_1 = [
                 20, 215, 0, 0,
                 35, 230, 0, 0,
                 95, 230, 0, 0,
                 110, 215, 0, 0,
                 95, 200, 0, 0,
                 35, 200, 0, 0,
-                ],
-            'seg_2' : [
+                ]
+        seg_2 = [
                 15, 210, 0, 0,
                 30, 195, 0, 0,
                 30, 135, 0, 0,
                 15, 120, 0, 0,
                 0, 135, 0, 0,
                 0, 195, 0, 0,
-                ],
-            'seg_3' : [
+                ]
+        seg_3 = [
                 115, 210, 0, 0,
                 130, 195, 0, 0,
                 130, 135, 0, 0,
                 115, 120, 0, 0,
                 100, 135, 0, 0,
                 100, 195, 0, 0,
-                ],
-            'seg4' : [
+                ]
+        seg_4 = [
                 20, 115, 0, 0,
                 35, 130, 0, 0,
                 95, 130, 0, 0,
@@ -88,108 +89,65 @@ class Segment(RelativeLayout):
                 95, 100, 0, 0,
                 35, 100, 0, 0,
                 ]
-            }
-
-        self.bind(pos=self._update_canvas, size=self._update_canvas)
-
-
-
-    def _update_canvas(self, *args):
-
-        matrix_1 = 
-
-        if self.value == "E.":
-            pass
-        
-        with self.canvas:
-            self.canvas.clear()
-            Color(self.color[0], self.color[1], self.color[2], 100)
-            Scale(self.scale)
-
-            self.segment_1 = Mesh(vertices=[
-                20, 215, 0, 0,
-                35, 230, 0, 0,
-                95, 230, 0, 0,
-                110, 215, 0, 0,
-                95, 200, 0, 0,
-                35, 200, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-            
-            self.segment_2 = Mesh(vertices=[
-                15, 210, 0, 0,
-                30, 195, 0, 0,
-                30, 135, 0, 0,
-                15, 120, 0, 0,
-                0, 135, 0, 0,
-                0, 195, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-            
-            self.segment_3 = Mesh(vertices=[
-                115, 210, 0, 0,
-                130, 195, 0, 0,
-                130, 135, 0, 0,
-                115, 120, 0, 0,
-                100, 135, 0, 0,
-                100, 195, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-
-            self.segment_4 = Mesh(vertices=[
-                20, 115, 0, 0,
-                35, 130, 0, 0,
-                95, 130, 0, 0,
-                110, 115, 0, 0,
-                95, 100, 0, 0,
-                35, 100, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-
-            self.segment_5 = Mesh(vertices=[
+        seg_5 = [
                 15, 110, 0, 0,
                 30, 95, 0, 0,
                 30, 35, 0, 0,
                 15, 20, 0, 0,
                 0, 35, 0, 0,
                 0, 95, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-
-            self.segment_6 = Mesh(vertices=[
+                ]
+        seg_6 = [
                 115, 110, 0, 0,
                 130, 95, 0, 0,
                 130, 35, 0, 0,
                 115, 20, 0, 0,
                 100, 35, 0, 0,
                 100, 95, 0, 0,
-                ], indices=[0,1,2,3,4,5], mode='triangle_fan')
-
-            self.segment_7 = Mesh(vertices=[
+                ]
+        seg_7 = [
                 20, 15, 0, 0,
                 35, 30, 0, 0,
                 95, 30, 0, 0,
                 110, 15, 0, 0,
                 95, 0, 0, 0,
                 35, 0, 0, 0,
-                ], indices=[0,1,2,3,4,5])
-            
-            thept = Ellipse(pos=(135, 0), size=(25,25), segments=360)
+                ]
 
-            # self.segment_1.mode = 'triangle_fan'
-            # self.segment_2.mode = 'triangle_fan'
-            # self.segment_3.mode = 'triangle_fan'
-            # self.segment_4.mode = 'triangle_fan'
-            # self.segment_5.mode = 'triangle_fan'
-            # self.segment_6.mode = 'triangle_fan'
-            # self.segment_7.mode = 'triangle_fan'
-            
+        self.type_0 = [seg_1, seg_2, seg_3, seg_5, seg_6, seg_7]
+        self.type_1 = [seg_5, seg_6]
+
+
+        self.bind(pos=self._update_canvas, size=self._update_canvas)
+
+    def _update_canvas(self, *args):
+
+        with self.canvas:
+            self.canvas.clear()
+            Color(self.color[0], self.color[1], self.color[2], 100)
+            Scale(self.scale)
+
+            def make_mesh(self, ttype, *args):
+                for segment in ttype:
+                    Mesh(vertices=segment, indices=self.indice, mode=self.xmode)
+                if len(self.value) > 1:
+                    thept = Ellipse(pos=(135, 0), size=(25,25), segments=360)
+
+            if self.value == "0" or self.value == "0.":
+                make_mesh(self, ttype=self.type_0)
+
+            if self.value == "1" or self.value == "1.":
+                make_mesh(self, ttype=self.type_1)
+   
 class SegmentTestApp(App):
     def build(self):
         box = GridLayout(cols=3, padding=20)
-
-        box.add_widget(Segment())
-        box.add_widget(Segment())
-        box.add_widget(Segment())
-        box.add_widget(Segment())
-        box.add_widget(Segment())
-        box.add_widget(Segment())
-
+        box.add_widget(Segment(value="1"))
+        box.add_widget(Segment(value="0"))
+        box.add_widget(Segment(value="0."))
+        box.add_widget(Segment(value="0"))
+        box.add_widget(Segment(value="0"))
+        box.add_widget(Segment(value="0"))
         return box
             
 if __name__ in ('__main__'):
