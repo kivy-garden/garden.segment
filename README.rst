@@ -7,7 +7,7 @@
     The scale property of segment must be a float.
     The color property of segment must be a string.
 
-    Ex::
+    Ex:
 
     seg = Segment(scale=0.3, value="A.")
 
