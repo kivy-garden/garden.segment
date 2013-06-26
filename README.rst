@@ -16,3 +16,5 @@ Are permitted : 0 1 2 3 4 5 6 7 8 9 and 0. 1. 2. 3. 4. 5. 6. 7. 8. 9.
 And this : 
 
 A b C d E F and A. b. C. d. E. F.
+
+http://youtu.be/EkJ7Pp0p7zA
